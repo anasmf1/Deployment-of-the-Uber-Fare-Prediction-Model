@@ -1,20 +1,32 @@
-# Deployment-of-the-Uber-Fare-Prediction-Model
-The project is about on world's largest taxi company Uber inc. In this project, we're looking to predict the fare for their future transactional cases. Uber delivers service to lakhs of customers daily. Now it becomes really important to manage their data properly to come up with new business ideas to get best results. Eventually, it becomes really important to estimate the fare prices accurately.
+# Deployment of the Uber Fare Prediction Model
 
-The datset contains the following fields:
+## Project Overview
+This project focuses on Uber, one of the world's largest taxi companies. In this project, we aim to predict the fare for future Uber trips based on historical data. Uber serves millions of customers daily, and managing this data efficiently is essential for driving new business ideas and optimizing services. A crucial part of this is being able to predict fare prices accurately for various transactional scenarios.
 
-key - a unique identifier for each trip
-fare_amount - the cost of each trip in usd
-pickup_datetime - date and time when the meter was engaged
-passenger_count - the number of passengers in the vehicle (driver entered value)
-pickup_longitude - the longitude where the meter was engaged
-pickup_latitude - the latitude where the meter was engaged
-dropoff_longitude - the longitude where the meter was disengaged
-dropoff_latitude - the latitude where the meter was disengaged
-Acknowledgement:
-The dataset is referred from Kaggle.
+## Dataset Information
+The dataset used in this project contains the following fields:
 
-Objective:
-Understand the Dataset & cleanup (if required).
-Build Regression models to predict the fare price of uber ride.
-Also evaluate the models & compare thier respective scores like R2, RMSE, etc.
+- **key**: A unique identifier for each trip.
+- **fare_amount**: The cost of each trip in USD.
+- **pickup_datetime**: Date and time when the meter was engaged.
+- **passenger_count**: The number of passengers in the vehicle (driver-entered value).
+- **pickup_longitude**: The longitude where the meter was engaged.
+- **pickup_latitude**: The latitude where the meter was engaged.
+- **dropoff_longitude**: The longitude where the meter was disengaged.
+- **dropoff_latitude**: The latitude where the meter was disengaged.
+
+## Acknowledgements
+The dataset is sourced from [Kaggle](https://www.kaggle.com), a platform for data science competitions and datasets.
+
+## Objective
+The primary objectives of this project are:
+
+1. **Understand and Clean the Dataset**:  
+   Explore the dataset, identify any missing or inconsistent data, and clean it up as necessary.
+
+2. **Build Regression Models**:  
+   Use machine learning techniques to build models that predict the fare price of an Uber ride based on various features like pickup location, time, and passenger count.
+
+3. **Model Evaluation**:  
+   Evaluate the performance of the models using various metrics such as R² (R-squared), RMSE (Root Mean Squared Error), and others. Compare the performance of different models to determine which one best predicts Uber fare prices.
+
