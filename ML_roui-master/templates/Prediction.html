@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../static/images/logo.jpg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Uber Fare Prediction </title>
+    <style>
+      /* Assurez-vous que le HTML et le body prennent toute la hauteur */
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      .container {
+        flex: 1; /* Prend tout l'espace restant */
+      }
+      /* Style personnalisé pour la navbar (header) */
+      .navbar-custom {
+        background-color: #6c6b6b; /* Fond sombre */
+        height: 90px; /* Hauteur de la navbar */
+        z-index: 56600 !important; /* Priorité élevée pour le z-index */
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-nav .nav-link {
+        color: rgb(214, 214, 214); /* Texte blanc pour la navbar */
+      }
+
+      .navbar-custom .navbar-nav .nav-link:hover {
+        color: #f8f9fa; /* Couleur du texte au survol */
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-family: 'Lato', sans-serif
+      }
+      .footer {
+        background-color: #6c6b6b; /* Vert */
+        color: white;              /* Couleur du texte */
+        text-align: center;        /* Centrer le texte */
+        padding: 20px;             /* Ajouter un peu de padding */
+        width: 100%;               /* Pleine largeur */
+      }
+
+
+      .caption {
+        text-align: center;
+        margin-top: 10%;
+        color: #fcc205; /* Texte blanc */
+      }
+
+      .caption h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .caption h1 {
+        font-size: 48px;
+        font-weight: bold;
+      }
+    
+      
+      h1 {
+        margin-bottom: 40px;
+      }
+
+      label {
+        color: #333;
+      }
+
+      .btn-send, .btn-predict {
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        width: 80%;
+        margin-left: 3px;
+      }
+
+      .help-block.with-errors {
+        color: #ff5050;
+        margin-top: 5px;
+      }
+
+      .card {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .iris-image {
+        max-width: 80%; /* Adjusted the max-width for the image */
+        height: auto;
+        margin-bottom: 20px; /* Increased margin at the bottom of the image */
+      }
+
+      h4 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+
+  <body >
+    <!-- Navbar personnalisée avec un fond sombre -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <a class="navbar-brand" href="/home">
+             <img src="https://static.ride.guru/uberfarefinder/images/logo.svg" alt="UberFareFinder" width="144px" height="100px"> 
+         </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+          <a class="nav-item nav-link" href="{{ url_for('predict_page') }}">Prediction</a>
+          <a class="nav-item nav-link" href="https://github.com/anasmf1/Deployment-of-the-Uber-Fare-Prediction-Model" target="_blank">Repository</a>
+          <a class="nav-item nav-link" href="{{ url_for('status_page') }}" style="color:#F75353;"> <strong> Current Status </strong></a>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+    <div class="text-center mt-5">
+        <h2>Uber Fare Prediction</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7 mx-auto">
+            <div class="card mt-2 mx-auto p-4 bg-light">
+                <div class="card-body bg-light">
+                    <div class="container">
+                        <form id="contact-form" role="form">
+                            <div class="controls">
+                                <!-- Passengers -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="PASS">The number of passengers</label>
+                                            <input id="PASS" type="number" class="form-control" placeholder="Please enter the number of passengers *" min="1" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Year -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Year">Year</label>
+                                            <select id="Year" class="form-control" required>
+                                                <option value="">Select Year</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Month -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Month">Month</label>
+                                            <select id="Month" class="form-control" required>
+                                                <option value="">Select Month</option>
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Day -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Day">Day</label>
+                                            <select id="Day" class="form-control" required>
+                                                <option value="">Select Day</option>
+                                                <!-- Days will be populated by JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hour -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="hour">Hour</label>
+                                            <select id="hour" class="form-control" required>
+                                                <option value="">Select Hour</option>
+                                                <!-- Hours will be populated by JavaScript -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Distance -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="distance">Distance (in Km)</label>
+                                            <input id="distance" type="number" class="form-control" placeholder="Please enter the distance in Km *" min="1" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Submit button and result display -->
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary" onclick="getPrediction()">Predict Fare</button>
+                                </div>
+                                <div id="prediction-result" class="text-center mt-3" style="font-size: 20px; font-weight: bold; color: #646664;"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer text-center mt-5">
+    <p>&copy; 2024-2025 ROUI ANAS & GUAROUAL OUMAIMA. All Rights Reserved.</p>
+</footer>
+
+<script>
+// Dynamically populate the Day and Hour dropdowns
+document.addEventListener("DOMContentLoaded", function () {
+    const daySelect = document.getElementById("Day");
+    const hourSelect = document.getElementById("hour");
+
+    // Populate days (1 to 31)
+    for (let i = 1; i <= 31; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        daySelect.appendChild(option);
+    }
+
+    // Populate hours (0 to 23)
+    for (let i = 0; i < 24; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${i.toString().padStart(2, '0')}:00`;
+        hourSelect.appendChild(option);
+    }
+});
+
+function getPrediction() {
+    const passenger_count = parseInt(document.getElementById("PASS").value, 10);
+    const year = parseInt(document.getElementById("Year").value, 10);
+    const month = parseInt(document.getElementById("Month").value, 10);
+    const day = parseInt(document.getElementById("Day").value, 10);
+    const hour = parseInt(document.getElementById("hour").value, 10);
+    const distance = parseFloat(document.getElementById("distance").value);
+
+    if (isNaN(passenger_count) || isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(distance)) {
+        document.getElementById("prediction-result").innerHTML = "Please fill in all fields correctly.";
+        return;
+    }
+
+    fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            passenger_count: passenger_count,
+            year: year,
+            month: month,
+            day: day,
+            hour: hour,
+            distance: distance
+        })
+    })
+    .then(response => {
+        if (response.ok) return response.json();
+        throw new Error("Server error");
+    })
+    .then(data => {
+        if (data.prediction !== undefined) {
+            document.getElementById("prediction-result").innerHTML = `Predicted Fare: ${data.prediction}`;
+        } else {
+            document.getElementById("prediction-result").innerHTML = `Error: ${data.error || "Unknown error"}`;
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("prediction-result").innerHTML = `Error: ${error.message}`;
+    });
+}
+</script>
+</body>
+</html>
